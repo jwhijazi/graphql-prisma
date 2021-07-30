@@ -1,16 +1,20 @@
 const { StudentBL } = require('../../data/student');
+const { ClassBL } = require('../../data/classes');
 const resolvers = {
     Query: {
         Students() {
             return StudentBL.getAll();
         },
         StudentsBy(_, args){
-            return [];
+            //console.log(args.filter);
+            return StudentBL.getBy(args.filter);
         }
     },
     Student: {
         class(parent) {
-            return {};
+            if(parent.classId)
+                return ClassBL.getClassById(parent.classId);
+            return null;
         }
     },
 
@@ -21,7 +25,10 @@ const resolvers = {
         },
 
         addStudentToClass: (_, args) => {
-            return '123';
+            var stuId = args.stuId;
+            var classId = args.classId;
+            var result = StudentBL.addStudentToClass(stuId, classId);
+            return result;
         },
     }
 }

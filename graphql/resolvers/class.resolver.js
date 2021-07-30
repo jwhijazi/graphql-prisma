@@ -1,15 +1,16 @@
 const { ClassBL } = require('../../data/classes');
+const { StudentBL } = require('../../data/student');
 
 const resolvers = {
     Query: {
         Classes() {
-            return [];
+            return ClassBL.getAll();
         }
     },
 
     SchoolClass:{
         students(parent){
-            return []
+            return StudentBL.getStudentsInClass(parent.id);
         }
     },
 

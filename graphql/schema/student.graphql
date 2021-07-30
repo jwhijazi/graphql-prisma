@@ -14,25 +14,22 @@ input AddStudentInput{
         address: String
         hasDisabilities: Boolean
     }
-
-input FilterOperation{
-    eq: String
-    neq: String
-    contains: String
+enum GenderFilterInput{
+    M
+    F
 }
-
 input StudentFilterInput{
-    name: FilterOperation
-    gender: FilterOperation
-    hasDisabilities: FilterOperation
+    name: String
+    gender: GenderFilterInput
+    hasDisabilities: Boolean
 }
 
 extend type Query{
         Students: [Student]
-        StudentsBy(filter: StudentFilterInput!): [Student]
+        StudentsBy(filter: [StudentFilterInput!]): [Student]
     }
 
 extend type Mutation{
         addStudent(student: AddStudentInput!) : ID!
-        addStudentToClass(stuId: String!, classId: String!): String!
+        addStudentToClass(stuId: String!, classId: Int!): Boolean!
     }
